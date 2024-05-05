@@ -21,7 +21,7 @@ from rich.table import Table
 #     user_choice = Prompt.ask("[cyan] :question: Enter your choice ")
 
 async def scan_devices():
-    print("[yellow] :satellite: Starting Bluetooth Scan")
+    print("[yellow]:satellite: Starting Bluetooth Scan")
     scanner = BleakScanner()
     await scanner.start()
     await asyncio.sleep(2)  # Scan for 2 seconds
