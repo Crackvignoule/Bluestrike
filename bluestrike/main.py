@@ -25,13 +25,13 @@ def Main_Modules():
     
     # Start Bluetooth Scan
     mac_addr = asyncio.run(main())
-    print(f"[yellow] :satellite: Selected Device [{mac_addr}]")
+    print(f"[yellow]:satellite: Selected Device [{mac_addr}]")
 
     # TODO Ask for method 1 or 2
 
     # Ask for packet size and threads count
-    packet_size = Prompt.ask("[red] :question: Enter the packet size (600)", default=600)
-    threads_count = Prompt.ask("[red] :question: Enter the threads count (100)", default=100)
+    packet_size = Prompt.ask("[red]:question: Enter the packet size (600)", default=600)
+    threads_count = Prompt.ask("[red]:question: Enter the threads count (100)", default=100)
 
     # Start attack
     _kick_(deauth_Method_1, mac_addr, int(packet_size), int(threads_count))
