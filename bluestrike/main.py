@@ -6,7 +6,7 @@ from rich.prompt import Prompt
 
 from .utils.logo import print_logo
 from .utils.kick import _kick_, deauth_Method_1, deauth_Method_2
-from .utils.scanner import main
+from .utils.scanner import scan
 
 # modules = """[bright_white] [1] :mag: Scan for Bluetooth Devices
 #  [2] :satellite: Kick Out Bluetooth Devices
@@ -24,7 +24,7 @@ def Main_Modules():
     os.system("rfkill unblock bluetooth")
     
     # Start Bluetooth Scan
-    mac_addr = asyncio.run(main())
+    mac_addr = asyncio.run(scan())
     print(f"[yellow]:satellite: Selected Device [{mac_addr}]")
 
     # TODO Ask for method 1 or 2

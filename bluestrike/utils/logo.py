@@ -17,10 +17,3 @@ def print_logo():
     os.system("clear||cls")
     faded_logo = fade.water(_LOGO_)
     print(faded_logo)
-
-if __name__ == "__main__":
-    logo()
-    
-
-
-

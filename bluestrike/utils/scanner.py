@@ -59,7 +59,7 @@ def select_option(devices):
             print("Invalid option. Please try again.")
             return select_option(devices)
 
-async def main():
+async def scan():
     while True:
         # Starting Bluetooth Scan
         devices = await scan_devices()
@@ -73,7 +73,3 @@ async def main():
         selected_device = select_option(devices)
         mac_address = selected_device
         return mac_address
-
-if __name__ == "__main__":
-    asyncio.run(main())
-
