@@ -20,7 +20,10 @@
 ```
 git clone https://github.com/StealthIQ/Bluestrike.git
 cd Bluestrike
-pip3 install -r requirements.txt
+pip install -r requirements.txt
+sudo apt-get install python3-dev
+sudo apt-get install libbluetooth-dev
+pip install git+https://github.com/pybluez/pybluez.git
 ```
 2. Install necessary packages
 ```

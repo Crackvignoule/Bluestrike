@@ -1,69 +1,52 @@
 import time 
 import os
 import asyncio
-
-from utils.logo import print_logo
-from utils.kick import _kick_
-from utils.scanner import main
+import subprocess
 
 from rich import print
 from rich.prompt import Prompt
 from rich.console import Console
 
-console = Console()
-input = Prompt.ask
+from utils.logo import print_logo
+from utils.kick import _kick_, deauth_Method_1, deauth_Method_2
+from utils.scanner import main, scan_devices
 
 modules = """[bright_white] [1] :mag: Scan for Bluetooth Devices
  [2] :satellite: Kick Out Bluetooth Devices
 [red] [Q] :door: Exit (Ctrl + c)
 """
 
+#TODO Build package with project.toml
+#TODO remove useless dependencies like asyncio ?
+#TODO remove dotenv and .en ; Symplifying usage by getting adress from user input during runtime
+#TODO ask for package size and threads count with default values
+#TODO GET MAC addr automatically for spoofing
+#TODO change spoofing method (ifconfig deprecated)
+
 def Main_Modules():
     print_logo()
     print(modules)
+    
+    asyncio.run(main())
 
-    user_choice = input("[cyan] :question: Enter your choice ")
-
-    if user_choice == "1":
-        mac_address = asyncio.run(main())
-        print("Selected MAC address:", mac_address)
+    mac_address = Prompt.ask("[red] :signal_strength: Enter the Mac Adress ")
+    start_time = Prompt.ask("[red] :question: In how many seconds do you want to start the attack ")
+    _kick_(deauth_Method_1, mac_address, 600, 20, int(start_time))
         
-        scan_again = input("[green] :question: Do you want to perform the scan again (y/n) ").lower() == "y"
-        if scan_again:
-            Main_Modules()
-
-        kick_ard = input("[red] :rocket: Do you want to kick the user ").lower() == "y"
-        start_time = input("[red] :question: In how many seconds do you want to start the attack ")
-        
-        if kick_ard:
-            _kick_(mac_address, 600, 10, int(start_time))
-        else:
-            print(":door: Exiting...")
-    elif user_choice == "2":
-        mac_address = input("[red] :signal_strength: Enter the Mac Adress ")
-        start_time = input("[red] :question: In how many seconds do you want to start the attack ")
-        _kick_(mac_address, 600, 20, int(start_time))
-        
-    elif user_choice.lower() == "q":
-        console.clear() 
-        exit()
-    else:
-        print("[red] :warning: Invalid Option")
-        time.sleep(1)
-        Main_Modules()
-
 
 if __name__ == "__main__":
     try:
         # Turns Bluetooth Adapter - ON
         os.system("rfkill unblock bluetooth")
+        os.system("bluetoothctl power on")
+        time.sleep(2)
         # ----------------------------------
         Main_Modules()
     except KeyboardInterrupt:
-        console.clear()
+        Console.clear()
         print("[red] :door: User Quit")
         exit()
     except Exception as e:
-        console.clear()
+        Console.clear()
         print(f"[red] :warning: ERROR VALUE [{e} ]")
         exit()

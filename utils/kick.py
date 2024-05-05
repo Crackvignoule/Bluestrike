@@ -2,6 +2,7 @@ import subprocess
 import multiprocessing
 import time
 import os
+import re
 from dotenv import load_dotenv
 from rich import print
 from rich.console import Console
@@ -9,6 +10,7 @@ from utils.macaddress_gen import generate_mac_address
 # from macaddress_gen import generate_mac_address
 
 load_dotenv()
+
 TARGET_DEVICE_MAC = os.getenv('TARGET_DEVICE_MAC')
 interface = os.getenv('INTERFACES')
 
@@ -27,6 +29,14 @@ SPOOFED_MACS = [
     generate_mac_address("LG")
     # Add more MAC addresses here if needed
 ]
+
+def get_bluetooth_mac_address():
+    output = subprocess.check_output(['hciconfig']).decode('utf-8')
+    match = re.search(r'BD Address: ([0-9A-Fa-f:]{17})', output)
+    if match:
+        return match.group(1)
+    else:
+        raise Exception('No Bluetooth MAC address found')
 
 # [ 2x Deauth Method ]
 def deauth_Method_1(target_addr, packages_size):
@@ -53,10 +63,10 @@ def deauth_Method_2(target_addr, packages_size):
     finally:
         sock.close()
 
-def change_mac_address(interface, mac_address):
-    subprocess.call(['ifconfig', interface, 'down'])
-    subprocess.call(['ifconfig', interface, 'hw', 'ether', mac_address])
-    subprocess.call(['ifconfig', interface, 'up'])
+# def change_mac_address(interface, mac_address):
+#     subprocess.call(['ifconfig', interface, 'down'])
+#     subprocess.call(['ifconfig', interface, 'hw', 'ether', mac_address])
+#     subprocess.call(['ifconfig', interface, 'up'])
 
 def _kick_(deauth_func, target_addr, packages_size, threads_count, start_time=1):
     for i in range(start_time, 0, -1):

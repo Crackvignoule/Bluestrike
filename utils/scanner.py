@@ -3,10 +3,23 @@ from bleak import BleakScanner
 from rich.console import Console
 from rich.table import Table
 
+# bl_scan = subprocess.check_output("bluetoothctl devices", shell=True, stderr=subprocess.STDOUT, text=True)
+#     # from the output of blutetoothctl scan, build dictionary of devices
+#     devices = {}
+#     for line in bl_scan.split("\n"):
+#         if "Device" in line:
+#             mac = line.split()[1]
+#             name = " ".join(line.split()[2:])
+#             devices[mac] = name
+#     print("[yellow] :satellite: Devices Found")
+#     for mac, name in devices.items():
+#         print(f"[yellow] {mac} - {name}")
+#     user_choice = Prompt.ask("[cyan] :question: Enter your choice ")
+
 async def scan_devices():
     scanner = BleakScanner()
     await scanner.start()
-    await asyncio.sleep(5)  # Scan for 5 seconds
+    await asyncio.sleep(2)  # Scan for 2 seconds
     await scanner.stop()
     devices = scanner.discovered_devices
     return devices
