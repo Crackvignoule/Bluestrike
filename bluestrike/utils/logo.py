@@ -10,7 +10,7 @@ _LOGO_ = """
 | |_) ) ^ \ |_| > _) / /_| || |_) ) ||   <> _) 
 |____/_/ \_\___/\___)_____)_)  __/ \_)_|\_\___)
                             | |                
-                            |_|   - By StealthIQ       
+                            |_|   - By Crackvignoule & StealthIQ       
 """
 
 def print_logo():
