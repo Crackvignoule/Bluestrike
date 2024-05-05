@@ -19,7 +19,7 @@
 1. Clone the repo and install basic requirements
 ```
 pip install git+https://github.com/Crackvignoule/Bluestrike.git
-bluestrike
+sudo $(which bluestrike)
 ```
 
 If you have issues with pybluez installation, you can try the following:
