@@ -66,7 +66,7 @@ async def main():
         display_devices(devices)
 
         # Ask if the user wants to scan again
-        scan_again = Prompt.ask("[bold cyan]Scan again \[y/N]? [/bold cyan]")
+        scan_again = Prompt.ask("[bold cyan]:repeat: Scan again \[y/N]? [/bold cyan]")
         if scan_again.lower() == "y":
             continue
 
