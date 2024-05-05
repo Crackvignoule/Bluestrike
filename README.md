@@ -7,7 +7,7 @@
 
 ## Tool Preview
 
-![Imgur](https://i.imgur.com/TwK0FOD.png)
+![Imgur](https://i.imgur.com/dkj7vdD.png)
 
 
 ## ⚠️ Note
