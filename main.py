@@ -15,7 +15,9 @@ modules = """[bright_white] [1] :mag: Scan for Bluetooth Devices
  [2] :satellite: Kick Out Bluetooth Devices
 [red] [Q] :door: Exit (Ctrl + c)
 """
-
+#TODO Scan at launch -> scan again [y/N] ? -> choose device to kick (id or manual mac address) -> (for future, optional) choose method (1 or 2) -> start attack
+#TODO add more text (for example for turning on bluetooth or if no bluetooth adapter is found)
+#TODO interactive choices with curses (like nvtop)
 #TODO Build package with project.toml
 #TODO remove useless dependencies like asyncio ?
 #TODO remove dotenv and .en ; Symplifying usage by getting adress from user input during runtime
