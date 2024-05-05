@@ -68,7 +68,7 @@ def deauth_Method_2(target_addr, packages_size):
 #     subprocess.call(['ifconfig', interface, 'hw', 'ether', mac_address])
 #     subprocess.call(['ifconfig', interface, 'up'])
 
-def _kick_(deauth_func, target_addr, packages_size, threads_count, start_time=1):
+def _kick_(deauth_func, target_addr, packages_size, threads_count, start_time=0):
     for i in range(start_time, 0, -1):
         console.print(f'[red] :rocket: Starting Deauth attack in {i}')
         time.sleep(1)

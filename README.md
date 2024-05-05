@@ -26,7 +26,7 @@ sudo apt-get install python3-dev
 sudo apt-get install libbluetooth-dev
 pip install git+https://github.com/pybluez/pybluez.git
 ```
-
+<!-- sudo $(which python) main.py for running if permission errors occurs -->
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your `.env` file:

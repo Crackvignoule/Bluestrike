@@ -11,11 +11,12 @@ from utils.logo import print_logo
 from utils.kick import _kick_, deauth_Method_1, deauth_Method_2
 from utils.scanner import main, scan_devices
 
-modules = """[bright_white] [1] :mag: Scan for Bluetooth Devices
- [2] :satellite: Kick Out Bluetooth Devices
-[red] [Q] :door: Exit (Ctrl + c)
-"""
-#TODO Scan at launch -> scan again [y/N] ? -> choose device to kick (id or manual mac address) -> (for future, optional) choose method (1 or 2) -> start attack
+# modules = """[bright_white] [1] :mag: Scan for Bluetooth Devices
+#  [2] :satellite: Kick Out Bluetooth Devices
+# [red] [Q] :door: Exit (Ctrl + c)
+# """
+
+#TODO Script lancement entrypoint project.toml
 #TODO add more text (for example for turning on bluetooth or if no bluetooth adapter is found)
 #TODO interactive choices with curses (like nvtop)
 #TODO Build package with project.toml
@@ -27,13 +28,19 @@ modules = """[bright_white] [1] :mag: Scan for Bluetooth Devices
 
 def Main_Modules():
     print_logo()
-    print(modules)
     
-    asyncio.run(main())
+    # Start Bluetooth Scan
+    mac_addr = asyncio.run(main())
+    print(f"[yellow] :satellite: Selected Device [{mac_addr}]")
 
-    mac_address = Prompt.ask("[red] :signal_strength: Enter the Mac Adress ")
-    start_time = Prompt.ask("[red] :question: In how many seconds do you want to start the attack ")
-    _kick_(deauth_Method_1, mac_address, 600, 20, int(start_time))
+    # TODO Ask for method 1 or 2
+
+    # Ask for packet size and threads count ( default values of 600 and 100 )
+    packet_size = Prompt.ask("[red] :question: Enter the packet size (600)", default=600)
+    threads_count = Prompt.ask("[red] :question: Enter the threads count (100)", default=100)
+
+    # Start attack
+    _kick_(deauth_Method_1, mac_addr, int(packet_size), int(threads_count))
         
 
 if __name__ == "__main__":

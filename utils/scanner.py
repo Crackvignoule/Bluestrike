@@ -1,5 +1,9 @@
 import asyncio
 from bleak import BleakScanner
+import re
+
+from rich import print
+from rich.prompt import Prompt
 from rich.console import Console
 from rich.table import Table
 
@@ -17,6 +21,7 @@ from rich.table import Table
 #     user_choice = Prompt.ask("[cyan] :question: Enter your choice ")
 
 async def scan_devices():
+    print("[yellow] :satellite: Starting Bluetooth Scan")
     scanner = BleakScanner()
     await scanner.start()
     await asyncio.sleep(2)  # Scan for 2 seconds
@@ -39,7 +44,7 @@ def display_devices(devices):
     console.print(table)
 
 def select_option(devices):
-    selection = input("Select an option (enter the number): ")
+    selection = Prompt.ask("[red] :signal_strength: Select an option (enter the No. or a MAC address)")
     try:
         index = int(selection) - 1
         if index >= 0 and index < len(devices):
@@ -47,8 +52,12 @@ def select_option(devices):
         else:
             raise ValueError()
     except ValueError:
-        print("Invalid option. Please try again.")
-        return select_option(devices)
+        # Check if the input is a valid MAC address.
+        if re.match("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$", selection):
+            return selection
+        else:
+            print("Invalid option. Please try again.")
+            return select_option(devices)
 
 async def main():
     # Starting Bluetooth Scan
