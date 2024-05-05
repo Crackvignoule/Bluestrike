@@ -44,7 +44,7 @@ def display_devices(devices):
     console.print(table)
 
 def select_option(devices):
-    selection = Prompt.ask("[red] :signal_strength: Select an option (enter the No. or a MAC address)")
+    selection = Prompt.ask("[red]:signal_strength: Select an option (enter the No. or a MAC address)")
     try:
         index = int(selection) - 1
         if index >= 0 and index < len(devices):
