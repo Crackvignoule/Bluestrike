@@ -19,22 +19,27 @@
 1. Clone the repo and install basic requirements
 ```
 pip install git+https://github.com/Crackvignoule/Bluestrike.git
+bluestrike
 ```
-2. Install necessary packages
+
+If you have issues with pybluez installation, you can try the following:
 ```
 sudo apt-get install python3-dev
 sudo apt-get install libbluetooth-dev
 pip install git+https://github.com/pybluez/pybluez.git
 ```
+
 <!-- sudo $(which python) main.py for running if permission errors occurs -->
-## Environment Variables
+<!-- try yo scan with bluetoothctl scan on --> 
+<!-- and bluetoothctl devices -->
+<!-- ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your `.env` file:
 
 ```plaintext
 .env 
 ```
-keep the .env file under `/utils`.
+keep the .env file under `/utils`. -->
 
 ## Table of Contents
 1. Working of Bluetooth

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "bluestrike"
+version = "1.0.0"
+description = "Bluestrike: CLI tool to hack Bluetooth devices through speaker jamming, traffic spoofing & device hijacking (In the making) "
+authors = ["Killian Pavy <kiki.kalagan@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/Crackvignoule/Bluestrike"
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Operating System :: OS Independent",
+]
+
+[tool.poetry.scripts]
+bluestrike = 'bluestrike.main:Main_Modules'
+
+[tool.poetry.dependencies]
+python = "^3.8"
+rich = "^13.7.1"
+fade = "^0.0.9"
+bleak = "^0.22.0"
+# python-dotenv = "^0.17.1"
+
+[[tool.poetry.source]]
+name = "bluestrike"
+url = "https://github.com/Crackvignoule/Bluestrike"

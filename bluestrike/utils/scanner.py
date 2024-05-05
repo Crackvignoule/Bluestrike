@@ -60,13 +60,19 @@ def select_option(devices):
             return select_option(devices)
 
 async def main():
-    # Starting Bluetooth Scan
-    devices = await scan_devices()
-    display_devices(devices)
-    selected_device = select_option(devices)
-    mac_address = selected_device
-    # print("Selected MAC address:", mac_address)
-    return mac_address
+    while True:
+        # Starting Bluetooth Scan
+        devices = await scan_devices()
+        display_devices(devices)
+
+        # Ask if the user wants to scan again
+        scan_again = Prompt.ask("[bold cyan]Scan again \[y/N]? [/bold cyan]")
+        if scan_again.lower() == "y":
+            continue
+
+        selected_device = select_option(devices)
+        mac_address = selected_device
+        return mac_address
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -7,27 +7,30 @@ from rich import print
 from rich.prompt import Prompt
 from rich.console import Console
 
-from utils.logo import print_logo
-from utils.kick import _kick_, deauth_Method_1, deauth_Method_2
-from utils.scanner import main, scan_devices
+from .utils.logo import print_logo
+from .utils.kick import _kick_, deauth_Method_1, deauth_Method_2
+from .utils.scanner import main, scan_devices
 
 # modules = """[bright_white] [1] :mag: Scan for Bluetooth Devices
 #  [2] :satellite: Kick Out Bluetooth Devices
 # [red] [Q] :door: Exit (Ctrl + c)
 # """
 
-#TODO Script lancement entrypoint project.toml
 #TODO add more text (for example for turning on bluetooth or if no bluetooth adapter is found)
 #TODO interactive choices with curses (like nvtop)
-#TODO Build package with project.toml
 #TODO remove useless dependencies like asyncio ?
-#TODO remove dotenv and .en ; Symplifying usage by getting adress from user input during runtime
+#TODO remove dotenv and .env ; Symplifying usage by getting adress from user input during runtime
 #TODO ask for package size and threads count with default values
 #TODO GET MAC addr automatically for spoofing
 #TODO change spoofing method (ifconfig deprecated)
 
 def Main_Modules():
     print_logo()
+    
+    # Turns Bluetooth Adapter - ON
+    os.system("rfkill unblock bluetooth")
+    os.system("bluetoothctl power on")
+    time.sleep(2)
     
     # Start Bluetooth Scan
     mac_addr = asyncio.run(main())
@@ -41,21 +44,3 @@ def Main_Modules():
 
     # Start attack
     _kick_(deauth_Method_1, mac_addr, int(packet_size), int(threads_count))
-        
-
-if __name__ == "__main__":
-    try:
-        # Turns Bluetooth Adapter - ON
-        os.system("rfkill unblock bluetooth")
-        os.system("bluetoothctl power on")
-        time.sleep(2)
-        # ----------------------------------
-        Main_Modules()
-    except KeyboardInterrupt:
-        Console.clear()
-        print("[red] :door: User Quit")
-        exit()
-    except Exception as e:
-        Console.clear()
-        print(f"[red] :warning: ERROR VALUE [{e} ]")
-        exit()
