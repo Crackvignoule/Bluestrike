@@ -24,7 +24,7 @@ async def scan_devices():
     print("[yellow]:satellite: Starting Bluetooth Scan")
     scanner = BleakScanner()
     await scanner.start()
-    await asyncio.sleep(2)  # Scan for 2 seconds
+    await asyncio.sleep(5)  # Scan for 5 seconds
     await scanner.stop()
     devices = scanner.discovered_devices
     return devices
